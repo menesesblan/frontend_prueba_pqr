@@ -137,9 +137,17 @@ const listar = () => {
       }
     });
     $("#tbl-pqr tbody").on("click", "tr .btn-eliminar", function () {
-      let { id_pqr } = table.row($(this).parent()).data();
-      $("#myModal4").modal();
-      $("#id_delete").val(id_pqr);
+      let { id_pqr, estado } = table.row($(this).parent()).data();
+      if (estado === "Cerrado") {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "No se puede actualizar estado despues de cerrado",
+        });
+      } else {
+        $("#myModal4").modal();
+        $("#id_delete").val(id_pqr);
+      }
     });
     $("#tbl-pqr tbody").on("click", "tr .btn-estado", function () {
       let { id_pqr, estado } = table.row($(this).parent()).data();
