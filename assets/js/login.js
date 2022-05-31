@@ -1,6 +1,6 @@
-// $(function () {
-//   isAuth("/frontend_pqr/pages/pqr/", true);
-// });
+$(function () {
+  isAuth("pages/pqr/", true);
+});
 
 $(document).ready(function () {
   $("#form-login").submit(function (event) {
@@ -45,7 +45,7 @@ const login = () => {
           localStorage.setItem("token", token);
           localStorage.setItem("id_usuario", id_usuario);
           localStorage.setItem("tipo", tipo);
-          isAuth("/frontend_pqr/pages/pqr/", true);
+          isAuth("pages/pqr/", true);
         }
       },
     });

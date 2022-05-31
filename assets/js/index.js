@@ -1,5 +1,5 @@
-const API = "http://localhost/backend_pqr/routes/";
-const SERVER_FRONT = "http://localhost";
+const API = "http://localhost/backend_prueba_pqr/routes/";
+const SERVER_FRONT = "http://localhost/frontend_prueba_pqr/";
 
 const isAuth = (render, validate = false) => {
   const isAuth = localStorage.token;
@@ -12,5 +12,5 @@ const cerrarSesion = () => {
   localStorage.setItem("token", "");
   localStorage.setItem("id_usuario", "");
   localStorage.setItem("tipo", "");
-  isAuth("/frontend_pqr/pages/login/ingresar.html");
+  isAuth("pages/login/ingresar.html");
 };

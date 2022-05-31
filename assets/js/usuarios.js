@@ -1,5 +1,5 @@
 $(function () {
-  isAuth("/frontend_pqr/pages/login/ingresar.html");
+  isAuth("pages/login/ingresar.html");
 });
 
 $(document).ready(function () {

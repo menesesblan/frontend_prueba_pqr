@@ -1,5 +1,5 @@
 $(function () {
-  isAuth("/frontend_pqr/pages/login/ingresar.html");
+  isAuth("pages/login/ingresar.html");
 });
 
 $(document).ready(function () {
@@ -142,7 +142,7 @@ const listar = () => {
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "No se puede actualizar estado despues de cerrado",
+          text: "No se puede eliminar la PQR despues de cerrada",
         });
       } else {
         $("#myModal4").modal();
