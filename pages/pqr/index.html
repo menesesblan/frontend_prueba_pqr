@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
+
+    <script type="text/javascript" src="../../assets/js/index.js"></script>
+    <script type="text/javascript" src="../../assets/js/pqr.js"></script>
+    <script type="text/javascript" src="../../assets/js/usuarios.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+
+    <title>PQR</title>
+</head>
+
+<body>
+
+  
+        <img src="../../assets/img/cuc_logo.png" style="width: 100%">
+    
+        <nav class="navbar navbar-light justify-content-between" style="background-color:white">
+            <a class="navbar-brand" style="margin-top: 10px;">Ingresado como: <span id="TipoNavbar">Administrador</span></a>
+            <form class="form-inline" style="margin-top: 10px;">
+                <button id="logout" type="button" class="btn" style="background-color:#D48B40; color:white">Cerrar sesion <i class="bi bi-box-arrow-right"></i></button>   
+            </form>
+          </nav>
+    <div style="padding: 40px;">   
+    <div id="container_actions">
+        <button id="btn_agregarP" type="button" style="background-color: #6C63FF; color:white; margin-bottom: 10px;" class="btn btn-md" data-toggle="modal" data-target="#myModal" style="margin-bottom:40px"><i class="bi bi-plus-circle"></i> Nueva PQR</button>
+        <button id="btn_agregarU" type="button" style="background-color: #6C63FF; color:white; margin-bottom: 10px" class="btn btn-md" data-toggle="modal" data-target="#myModal2" style="margin-bottom:40px"> <i class="bi bi-plus-circle"></i> Nuevo Usuario</button>
+    </div>
+        <table id="tbl-pqr" class="table align-middle mb-0" style="width:100%; border: 1px solid #6C63FF;" >
+            <thead class="bg-light" >
+                <tr style=" background-color: #6C63FF; color:white" >
+                    <td >Tipo de PQR</td>
+                    <td>Asunto</td>
+                    <td>Usuario</td>
+                    <td>Estado</td>
+                    <td>Fecha de Creación</td>
+                    <td>Fecha Limite</td>
+                    <td>Acciones</td>
+                </tr>
+            </thead>
+        <tbody ></tbody>
+        </table>
+    </div>
+
+    <!-- Agregar Tipo de PQR -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="card-body" style="color: #212529;">
+                        <h1 class="card-title text-center" style="padding-bottom:20px">AGREGAR PQR</h1>
+                        <form action="" method="post" class="was-validated" novalidate="" id="form-add-pqr">
+                            <div class="form-group">
+                                <label> Tipo de PQR (Petición, Queja, Reclamo):</label>
+                                <!-- <input type="text" id="tipo_pqr" name="tipo_pqr" class="form-control" required> -->
+                                <select class="form-control" id="tipo_pqr" name="tipo_pqr" required>
+                                    <option>Peticion</option>
+                                    <option>Queja</option>
+                                    <option>Reclamo</option>
+                                  </select>
+                                <div class="valid-feedback">Seleccione una opción</div>
+                                <!-- <div class="invalid-feedback">Por favor llene el campo</div> -->
+                            </div>
+                            <div class="form-group">
+                                <label> Asunto:</label>
+                                <textarea id="asunto" name="asunto" class="form-control" required></textarea>
+                                <div class="valid-feedback">Valido</div>
+                                <div class="invalid-feedback">Por favor llene el campo</div>
+                            </div>
+                            <div class="form-group">
+                                <input id="id_user" name="id_user" type="number" class="form-control" style="visibility: hidden;width:0px;height:0px;">
+                            </div>
+                            <div class="form-group">
+                                <label>Asignar a usuario</label>
+                                <select class="form-control" id="user" name="user" required></select>
+                                <div class="invalid-feedback">No hay usuarios agregados</div>
+                                <div class="valid-feedback">Seleccione una opción</div>
+                            </div>
+                            <div class="form-group m-0">
+                                <button type="submit" name="btn" id="add_btn" value="registrar" class="btn btn-primary btn-block">Agregar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+                <div id="mensaje"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Agregar Usuario -->
+    <div class="modal fade" id="myModal2" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="card-body" style="color: #212529;">
+                        <h1 class="modal-title text-center" style="padding-bottom:20px">Registrar Usuario</h1>
+                        <form action="" method="post" class="was-validated" novalidate="" id="form-add-user">
+                            <div class="form-group">
+                                <label> Nombre Completo:</label>
+                                <input type="text" id="nombre" name="nombre" class="form-control" required>
+                                <div class="invalid-feedback">Por favor llene el campo</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="sel1"> Email:</label>
+                                <input type="email" id="email" name="email" class="form-control" required>
+                                <div class="valid-feedback">Email valido</div>
+                                <div class="invalid-feedback">Ingresar un Email valido</div>
+                            </div>
+                            <div class="form-group">
+                                <label> Tipo de Usuario:</label>
+                                <!-- <input type="text" id="tipo_pqr" name="tipo_pqr" class="form-control" required> -->
+                                <select class="form-control" id="tipo_u" name="tipo_u">
+                                    <option>General</option>
+                                    <option>administrador</option>
+                                  </select>
+                                <div class="valid-feedback">Seleccione una opción</div>
+                                <!-- <div class="invalid-feedback">Por favor llene el campo</div> -->
+                            </div>
+                            <div class="form-group">
+                                <label> Contraseña:</label>
+                                <input type="password" id="password" name="password" class="form-control" required>
+                                <div class="invalid-feedback">Por favor llene el campo</div>
+                            </div>
+                            <div class="form-group m-0">
+                                <button type="submit" name="btn_user" id="add_user_btn" value="registrar" class="btn btn-primary btn-block">Registrar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Editar PQR -->
+    <div class="modal fade" id="myModal3" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="card-body" style="color: #212529;">
+                        <h1 class="modal-title text-center" >Editar PQR</h1>
+                        <form action="" method="post" class="was-validated" novalidate="" id="form-edit-pqr">
+                            <div class="form-group">
+                                <input id="id_pqr" name="id_pqr" type="number" class="form-control" style="visibility: hidden;width:0px;height:0px;">
+                            </div>
+                            <div class="form-group">
+                                <label> Tipo de PQR (Petición, Queja, Reclamo):</label>
+                                <!-- <input type="text" id="tipo_pqr" name="tipo_pqr" class="form-control" required> -->
+                                <select class="form-control" id="tipo_pqr_edit" name="tipo_pqr_edit" required>
+                                    <option>Peticion</option>
+                                    <option>Queja</option>
+                                    <option>Reclamo</option>
+                                  </select>
+                                <div class="valid-feedback">Seleccione una opción</div>
+                                <!-- <div class="invalid-feedback">Por favor llene el campo</div> -->
+                            </div>
+                            <div class="form-group">
+                                <label> Asunto:</label>
+                                <textarea id="asunto_edit" name="asunto_edit" class="form-control" required></textarea>
+                                <div class="valid-feedback">Valido</div>
+                                <div class="invalid-feedback">Por favor llene el campo</div>
+                            </div>
+                      
+                                <div class="form-group">
+                                    <label>Usuario</label>
+                                    <select class="form-control" id="usuario_edit" name="usuario_edit" required></select>
+                                    <div class="valid-feedback">Seleccione una opción</div>
+                                </div>
+                           
+                            <div class="form-group m-0">
+                                <button type="submit" name="btn_edit" id="edit_btn" value="registrar" class="btn btn-primary btn-block">Editar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Eliminar PQR -->
+    <div class="modal fade" id="myModal4" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="card-body" style="color: #212529;">
+                        <h1 class="card-title text-center" style="padding-bottom:20px"><i class="bi bi-exclamation-diamond"></i> <b>ELIMINAR</b> <i class="bi bi-exclamation-diamond bi-primary"></i></h1>
+                        <form action="" method="post" class="was-validated" novalidate="" id="form-delete-pqr">
+                            <div class="form-group">
+                                <input id="id_delete" name="id_delete" type="number" class="form-control" style="visibility: hidden;width:0px;height:0px;">
+                            </div>
+                            <h3 style="padding-bottom: 25px;">¿Seguro que quieres eliminar la PQR?</h3>
+                            <div class="modal-footer">
+                                <button type="submit" name="btn" id="add_btn" value="registrar" class="btn btn-primary">Aceptar</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cambiar estado -->
+    <div class="modal fade" id="myModal5" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="card-body" style="color: #212529;">
+                        <h1 class="card-title text-center" style="padding-bottom:20px"><b>ACTUALIZAR ESTADO</b></h1>
+                        <form action="" method="post" class="was-validated" novalidate="" id="form-estado-pqr">
+                            <div class="form-group">
+                                <input id="id_estado" name="id_estado" type="number" class="form-control" style="visibility: hidden;width:0px;height:0px;">
+                            </div>
+                            <div class="form-group">
+                                <input id="estado_estado" name="estado_estado" type="text" class="form-control" style="visibility: hidden;width:0px;height:0px;">
+                            </div>
+                            <h4 style="padding-bottom: 25px; text-align: center;" id="titulo_estado">¿Seguro que quiere actualizar el estado?</h4>
+                            <div class="modal-footer">
+                                <button type="submit" name="btn" id="add_btn" value="registrar" class="btn btn-primary">Actualizar</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
